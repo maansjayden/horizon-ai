@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 // Load environment variables
@@ -89,6 +91,17 @@ You MUST return ONLY a JSON object matching this schema. Do not write markdown b
       details: error instanceof Error ? error.message : String(error)
     });
   }
+});
+
+// Serve static assets in production
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+app.use(express.static(path.join(__dirname, 'dist')));
+
+// Fallback all non-API GET requests to React's index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 app.listen(port, () => {
