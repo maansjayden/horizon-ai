@@ -1,0 +1,543 @@
+:root {
+  /* Color Palette (Light Mode Default) */
+  --hue-primary: 270; /* Purple */
+  --hue-secondary: 185; /* Cyan */
+  --hue-success: 145; /* Emerald */
+  
+  --primary: hsl(var(--hue-primary), 85%, 60%);
+  --primary-hover: hsl(var(--hue-primary), 85%, 50%);
+  --primary-bg: hsla(var(--hue-primary), 85%, 60%, 0.1);
+  --primary-border: hsla(var(--hue-primary), 85%, 60%, 0.2);
+  
+  --secondary: hsl(var(--hue-secondary), 80%, 45%);
+  --secondary-hover: hsl(var(--hue-secondary), 80%, 38%);
+  --secondary-bg: hsla(var(--hue-secondary), 80%, 45%, 0.1);
+  
+  --success: hsl(var(--hue-success), 70%, 42%);
+  --success-bg: hsla(var(--hue-success), 70%, 42%, 0.1);
+  --success-border: hsla(var(--hue-success), 70%, 42%, 0.3);
+
+  --bg: hsl(240, 20%, 98%);
+  --bg-dots: hsla(240, 10%, 10%, 0.05);
+  --bg-gradient: linear-gradient(135deg, hsl(240, 20%, 98%) 0%, hsl(240, 15%, 93%) 100%);
+  --card-bg: rgba(255, 255, 255, 0.75);
+  --card-border: rgba(0, 0, 0, 0.08);
+  --border: hsl(240, 10%, 90%);
+  
+  --text: hsl(240, 6%, 35%);
+  --text-muted: hsl(240, 5%, 55%);
+  --text-heading: hsl(240, 12%, 12%);
+  
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.1);
+  --glass-blur: 16px;
+  
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Outfit', var(--font-sans);
+  --font-mono: ui-monospace, 'Cascadia Code', monospace;
+  
+  font-family: var(--font-sans);
+  color-scheme: light dark;
+}
+
+/* Dark Mode Overrides */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: hsl(var(--hue-primary), 90%, 68%);
+    --primary-hover: hsl(var(--hue-primary), 90%, 75%);
+    --primary-bg: hsla(var(--hue-primary), 90%, 68%, 0.15);
+    --primary-border: hsla(var(--hue-primary), 90%, 68%, 0.3);
+    
+    --secondary: hsl(var(--hue-secondary), 85%, 50%);
+    --secondary-hover: hsl(var(--hue-secondary), 85%, 60%);
+    --secondary-bg: hsla(var(--hue-secondary), 85%, 50%, 0.15);
+    
+    --success: hsl(var(--hue-success), 75%, 48%);
+    --success-bg: hsla(var(--hue-success), 75%, 48%, 0.15);
+    --success-border: hsla(var(--hue-success), 75%, 48%, 0.35);
+
+    --bg: hsl(240, 14%, 6%);
+    --bg-dots: hsla(0, 0%, 100%, 0.03);
+    --bg-gradient: linear-gradient(135deg, hsl(240, 14%, 6%) 0%, hsl(240, 10%, 10%) 100%);
+    --card-bg: rgba(18, 18, 24, 0.7);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --border: hsl(240, 8%, 16%);
+    
+    --text: hsl(240, 5%, 78%);
+    --text-muted: hsl(240, 4%, 58%);
+    --text-heading: hsl(0, 0%, 100%);
+    
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 12px 36px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Reset & Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  color: var(--text);
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+}
+
+/* Grid Background Dot Matrix Pattern */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(var(--bg-dots) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Custom Scrollbars (Following Modern Guidance) */
+body, .scroll-container {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-border) transparent;
+}
+
+body::-webkit-scrollbar, .scroll-container::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+body::-webkit-scrollbar-track, .scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body::-webkit-scrollbar-thumb, .scroll-container::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 99px;
+  border: 2px solid var(--bg);
+}
+
+body::-webkit-scrollbar-thumb:hover, .scroll-container::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-border);
+}
+
+/* Typography Hierarchy */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--text-heading);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 2.5rem;
+  letter-spacing: -0.04em;
+}
+
+h2 {
+  font-size: 1.85rem;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: 1.4rem;
+  letter-spacing: -0.01em;
+}
+
+p {
+  color: var(--text);
+}
+
+p.muted {
+  color: var(--text-muted);
+}
+
+/* Button & Interactable Elements */
+button, .btn {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  user-select: none;
+  text-decoration: none;
+}
+
+/* Button States & Types */
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 4px 12px hsla(var(--hue-primary), 85%, 60%, 0.25);
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px hsla(var(--hue-primary), 85%, 60%, 0.35);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: var(--card-bg);
+  border-color: var(--card-border);
+  color: var(--text-heading);
+  backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:hover {
+  background: var(--border);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-accent {
+  background: var(--secondary-bg);
+  color: var(--secondary);
+  border-color: hsla(var(--hue-secondary), 80%, 45%, 0.2);
+}
+
+.btn-accent:hover {
+  background: var(--secondary);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.btn-icon-only {
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  border-radius: 50%;
+  border-color: var(--card-border);
+  background: var(--card-bg);
+  color: var(--text-heading);
+}
+
+.btn-icon-only:hover {
+  background: var(--border);
+  transform: scale(1.05);
+}
+
+/* Glassmorphism Panels */
+.glass-panel {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 16px;
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  box-shadow: var(--shadow-md);
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.glass-panel:hover {
+  box-shadow: var(--shadow-lg);
+  border-color: hsla(var(--hue-primary), 90%, 68%, 0.15);
+}
+
+/* Main Layout Wrapper */
+#root {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  padding: 0 1.5rem;
+  z-index: 10;
+  position: relative;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(20px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes pulseBorder {
+  0% { border-color: var(--card-border); }
+  50% { border-color: var(--primary); }
+  100% { border-color: var(--card-border); }
+}
+
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.delay-1 { animation-delay: 0.1s; opacity: 0; animation-fill-mode: forwards; }
+.delay-2 { animation-delay: 0.2s; opacity: 0; animation-fill-mode: forwards; }
+.delay-3 { animation-delay: 0.3s; opacity: 0; animation-fill-mode: forwards; }
+
+/* Global Header Nav */
+header.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2rem;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-icon {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: 0 4px 12px hsla(var(--hue-primary), 85%, 60%, 0.3);
+}
+
+.logo-text {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.45rem;
+  background: linear-gradient(135deg, var(--text-heading) 40%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Header Utilities */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Badge/Tag */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.badge-primary {
+  background: var(--primary-bg);
+  color: var(--primary);
+  border: 1px solid var(--primary-border);
+}
+
+.badge-secondary {
+  background: var(--secondary-bg);
+  color: var(--secondary);
+  border: 1px solid hsla(var(--hue-secondary), 80%, 45%, 0.15);
+}
+
+.badge-success {
+  background: var(--success-bg);
+  color: var(--success);
+  border: 1px solid var(--success-border);
+}
+
+/* Floating HUD layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+  flex-grow: 1;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 900px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Left Sidebar Navigation */
+.sidebar-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: fit-content;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  list-style: none;
+}
+
+.nav-item {
+  width: 100%;
+}
+
+.nav-link {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.25rem;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid transparent;
+  text-align: left;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+.nav-link:hover {
+  background: var(--border);
+  color: var(--text-heading);
+  transform: translateX(4px);
+}
+
+.nav-link.active {
+  background: var(--primary-bg);
+  color: var(--primary);
+  border-color: var(--primary-border);
+  font-weight: 600;
+}
+
+.nav-link svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Info Summary Card */
+.info-card {
+  padding: 1.25rem;
+  border-radius: 12px;
+  background: hsla(240, 5%, 50%, 0.03);
+  border: 1px dashed var(--border);
+  font-size: 0.85rem;
+}
+
+.info-card h4 {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Footer Section */
+footer.app-footer {
+  text-align: center;
+  padding: 2rem 0;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer.app-footer a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+footer.app-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  footer.app-footer {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+/* Mobile Sidebar Navigation Overrides */
+@media (max-width: 900px) {
+  .sidebar-panel {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    gap: 0 !important;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+    margin-inline: -1.5rem;
+    padding-inline: 1.5rem;
+  }
+  .sidebar-panel .glass-panel {
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    width: 100%;
+  }
+  .nav-list {
+    flex-direction: row !important;
+    overflow-x: auto;
+    scrollbar-width: none;
+    gap: 0.5rem;
+    padding: 0;
+  }
+  .nav-list::-webkit-scrollbar {
+    display: none;
+  }
+  .nav-item {
+    width: auto !important;
+    flex-shrink: 0;
+  }
+  .nav-link {
+    padding: 0.55rem 0.9rem !important;
+    font-size: 0.82rem !important;
+    border-radius: 8px !important;
+    gap: 0.4rem !important;
+    white-space: nowrap;
+    border: 1px solid var(--card-border) !important;
+    background: var(--card-bg) !important;
+  }
+  .nav-link.active {
+    background: var(--primary-bg) !important;
+    border-color: var(--primary-border) !important;
+  }
+  .nav-link:hover {
+    transform: none !important;
+  }
+  .sidebar-panel .info-card {
+    display: none !important;
+  }
+}
